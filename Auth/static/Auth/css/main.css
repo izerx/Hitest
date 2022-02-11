@@ -1,0 +1,56 @@
+.map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+
+.hidden{
+  display: none;
+}
+
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+
+.list-group.list-group-flush.border-bottom-0 i{
+  width: 20px !important;
+}
+
+#fin_income_filter, #fin_income_paginate{
+  justify-content: end;
+  display: flex;
+}
+
+#fin_income_length > label > select{
+  width: auto;
+}
+
+.right-0{
+  right: 0;
+}
+
+html, body{
+  width: -webkit-fill-available !important;
+  height: -webkit-fill-available !important;
+}
+
+.h-fill{
+  height: -webkit-fill-available !important;
+}
+
+.w-fill{
+  width: -webkit-fill-available !important;
+}
+
+.navbar-nav > .nav-item{
+  margin-right: 1rem !important;
+}
+
+.navbar-nav > .nav-item > .nav-link.active{
+  border-bottom: 2px solid #4285F4;
+}
