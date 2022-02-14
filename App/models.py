@@ -11,6 +11,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     group = models.CharField(max_length=100, null=True, blank=True)
+    fio = models.CharField(max_length=100, null=True, blank=True)
 
 class Test(models.Model):
     date = models.DateTimeField(blank=True, null=True)
@@ -21,3 +22,6 @@ class Question(models.Model):
     text = models.TextField()
     right_answer = models.TextField()
     wrong_answers = models.TextField()
+
+    def get_answers(self):
+        w_a = 
