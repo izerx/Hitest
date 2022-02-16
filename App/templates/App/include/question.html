@@ -1,0 +1,12 @@
+{% for question in subject.questions.all %}
+<div class="question">
+    <p>{{question.text}}</p>
+    <ul>
+        {% for answer in question.get_answers %}
+        <li class="{% if answer == question.right_answer %}text-success font-weight-bold{% endif %}">
+            {{answer}}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}

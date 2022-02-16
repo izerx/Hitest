@@ -14,16 +14,17 @@
   <!-- Material Design Bootstrap -->
   <link href="{% static 'App/css/mdb.css' %}" rel="stylesheet">
   <!-- Your custom styles (optional) -->
-
+  <link href="{% static 'App/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'App/css/main.css' %}" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 
-<body class="grey lighten-3">
-    <!--Navbar -->
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-        <a class="navbar-brand" href="#">Результаты теста № {{test.number_test}} от {{test.date.date}}</a>
+<body class="fixed-sn white-skin">
+    <header>
+  <!--Navbar -->
+    <nav class="mb-1 fixed-top navbar navbar-expand-lg navbar-dark info-color">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,45 +48,56 @@
         </div>
     </nav>
     <!--/.Navbar -->
+    </header>
+    <div class="sidebar-fixed position-fixed">
 
-  <main>
-    <div class="container card">
-        <div class="row mt-5 mb-5 d-block text-center">
-            {{test.subject.name}}
-            <h2>Результат тестирования</h2>
-            <h2>{{test.right_answers}}/{{test.all_questions_count}}</h2>
+        <div class="row mt-3 mb-3">
+          <img src="{% static 'logo.png' %}" width="100%" alt="">
         </div>
-        <div class="row d-flex align-items-center justify-content-center">
-            <canvas id="myChart" style="max-width: 500px;"></canvas>
+      
+        <div class="list-group list-group-flush border-bottom-0">
+          <a href="/" class="list-group-item list-group-item-action waves-effect">
+            <i class="fas fa-list-ol mr-3"></i> Доступные тесты
+          </a>
+          <a href="/history" class="list-group-item active list-group-item-action waves-effect">
+            <i class="fas fa-history mr-3"></i> Пройденные тесты
+          </a>
         </div>
-        <div class="row">
-            {% for question in test.get_answers %}
-            <div class="question m-4 w-100">
-                
-                Вопрос № {{forloop.counter}}
-                <p>{{question.text}}</p>
-    
-                {% if question.answer == question.right_answer %}
-                <div class="alert alert-success" role="alert">
-                    {{question.answer}}
-                </div>
-                {% else %}
-                <div class="alert alert-danger" role="alert">
-                    {{question.answer}}
-                </div>
-                Правильный ответ:
-                <div class="alert alert-light" role="alert">
-                    {{question.right_answer}}
-                  </div>
-                {% endif %}            
-            </div>  
-            {% endfor %}     
-            <div class="row d-flex w-100 justify-content-center mb-5">
-            <button class="btn btn-primary rounded text-center width-a" onclick="window.location.href = '/'">На главную</button>
-            </div>    
+        <hr class="mt-0">
+        © 2022 HiTest <br>
+        Дизайн и разработка <br>БВТ-191 - Шахов Р.А <br>
+        <hr>
+        версия 1.0.0
+      
+      </div>
+
+    <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+        <div class="container-fluid">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Студент</th>
+                    <th scope="col">Дисциплина</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Результат</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for test in complete_tests %}
+                    <tr>
+                        <th scope="row">{{test.student.fio}} - {{test.student.group}}</th>
+                        <td>{{test.subject.name}}</td>
+                        <td>{{test.date.date}}</td>
+                        <td>{{test.right_answers}}/{{test.all_questions_count}} <a class="btn btn-info btn-sm ml-4" href="/result/{{test.id}}">Подробнее</a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
         </div>
     </div>
-  </main>
+    </main>
+
   
 
   <script src="{% static 'App/js/jquery.js' %}" type="text/javascript"></script>
@@ -98,45 +110,7 @@
   <script src="{% static 'App/js/AjaxCSRFgen.js' %}" type="text/javascript"></script>
   <script src="{% static 'App/js/main.js' %}" type="text/javascript"></script>
 
-  <script>
-      var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ["Результат"],
-datasets: [{
-label: 'Неправильные ответы',
-data: ["{{test.wrong_answers}}",],
-backgroundColor: [
-'rgba(255, 99, 132, 0.2)',
-],
-borderColor: [
-'rgba(255,99,132,1)',
-'rgba(54, 162, 235, 1)',
-],
-borderWidth: 1
-},{
-label: 'Правильные ответы',
-data: ["{{test.right_answers}}",],
-backgroundColor: [
-'rgba(75, 192, 192, 0.2)'
-],
-borderColor: [
-'rgba(75, 192, 192, 1)',
-],
-borderWidth: 1
-}]
-},
-options: {
-scales: {
-yAxes: [{
-ticks: {
-beginAtZero: true
-}
-}]
-}
-}
-});
-  </script>
+  {% block scripts %}
+  {% endblock %}
 </body>
 </html>

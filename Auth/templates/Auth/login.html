@@ -38,8 +38,8 @@
 
                     <!-- Email -->
                     <div class="md-form">
-                      <input type="email" id="email" name="email" required class="form-control {% if errors.user %}is-invalid{% endif %}">
-                      <label for="email">E-mail</label>
+                      <input type="text" id="username" name="username" required class="form-control {% if errors.user %}is-invalid{% endif %}">
+                      <label for="username">Имя пользователя</label>
                       {% if errors.user %}
                       <div class="invalid-feedback">
                         {{errors.user}}

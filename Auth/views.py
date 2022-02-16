@@ -7,12 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 
 def sign_in(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password =  request.POST.get('password')
         errors = {}
 
         try:
-            user = User.objects.get(email = email)
+            user = User.objects.get(username = username)
         except Exception:
             errors['user'] = 'Пользователь не найден'
             context = {'errors': errors}
@@ -31,30 +31,31 @@ def sign_in(request):
 def sign_up(request):
 
     if request.method == 'POST':
-        name = request.POST.get('name')
-        surname = request.POST.get('surname')
-        email = request.POST.get('email')
+        fio = request.POST.get('fio')
+        username = request.POST.get('username')
+        group = request.POST.get('group')
 
         password = request.POST.get('password')
         password_validation = request.POST.get('password_validation')
 
         errors = {}
-        if not name:
-            errors['name'] = 'Укажите ваше имя'
-        if not surname:
-            errors['surname'] = 'Укажите вашу фамилию'
+        if not fio:
+            errors['fio'] = 'Укажите ваше фио'
         if password != password_validation:
             errors['password_validation'] = 'Пароли не совпадают'
-        if not email:
-            errors['email'] = 'Укажите email'
-        if email and User.objects.filter(email = email).all().count() > 0:
-            errors['email'] = 'Такой Email уже используется'
+        if not username:
+            errors['username'] = 'Укажите имя пользователя'
+        if username and User.objects.filter(username = username).all().count() > 0:
+            errors['email'] = 'Такой имя пользователя уже используется'
         if len(password) < 8:
             errors['password_validation'] = 'Пароль не должен быть меньше 8 символов'
 
         if not errors:
-            user = User.objects.create_user(username=email, password=password, first_name = name, last_name = surname, email = email)
+            user = User.objects.create_user(username=username, password=password)
+            user.profile.group = group
+            user.profile.fio = fio
             user.save()
+            user.profile.save()
 
             login(request, user)
 

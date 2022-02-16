@@ -31,11 +31,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav ml-auto">
-          {% if user.profile.status == 0 %}
-          <li class="nav-item d-flex align-items-center text-white">
-              <a class="navlink">Группа {{user.profile.group}}</a>
-          </li>
-          {% endif %}
+            <li class="nav-item d-flex align-items-center text-white">
+                <button class="btn btn-white  btn-sm" data-toggle="modal" data-target="#question_modal">Добавить вопрос</button>
+            </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -56,21 +54,12 @@
         </div>
       
         <div class="list-group list-group-flush border-bottom-0">
-          {% if user.profile.status == 0 %}
-          <a href="/" class="list-group-item active list-group-item-action waves-effect">
+          <a href="/" class="list-group-item list-group-item-action waves-effect">
             <i class="fas fa-list-ol mr-3"></i> Доступные тесты
           </a>
-          <a href="/history" class="list-group-item list-group-item-action waves-effect">
+          <a href="/history" class="list-group-item active list-group-item-action waves-effect">
             <i class="fas fa-history mr-3"></i> Пройденные тесты
           </a>
-          {% else %}
-          <a href="/" class="list-group-item active list-group-item-action waves-effect">
-            <i class="fas fa-list-ol mr-3"></i> Мои дисциплины
-          </a>
-          <a href="/history" class="list-group-item list-group-item-action waves-effect">
-            <i class="fas fa-history mr-3"></i> Пройденные тесты
-          </a>
-          {% endif %}
         </div>
         <hr class="mt-0">
         © 2022 HiTest <br>
@@ -80,40 +69,17 @@
       
       </div>
 
-      <main class="pt-5 mx-lg-5">
-        <div class="container-fluid mt-5">
-            <div class="container-fluid">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">Дисциплина</th>
-                        <th scope="col" class="text-right">Действия</th>
-                      </tr> 
-                    </thead>
-                    <tbody>
-                        {% for subject in Subjects %}
-                        <tr>
-                            <th scope="row">{{subject.name}}</th>
-                            {% if user.profile.status == 0 %}
-                            <td align="right"><button class="btn btn-info btn-sm" onclick="run_test('{{subject.id}}')">Пройти тест</button></td>
-                            {% else %}
-                            <td align="right">
-                              <!-- <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#question_modal" data-subject-id="{{subject.id}}" data-subject-title="{{subject.name}}">Добавить вопрос</button> -->
-                              <a href="/questions/{{subject.id}}" class="btn btn-info btn-sm">Посмотреть все вопросы</a>
-                            </td>
-                            {% endif %}
-                        </tr>
-                      
-                      {% endfor %}
-                    </tbody>
-                  </table>
-            </div>
+    <main class="pt-5 mx-lg-5">
+    <div class="container-fluid mt-5">
+        <div class="container-fluid" id="main-container">
+            {% include 'App/include/question.html' %}
         </div>
-        </main>
+    </div>
+    </main>
 
-  {% if user.profile.status != 0 %}
+    {% if user.profile.status != 0 %}
   <!-- Modal -->
-  <div class="modal fade" id="add_question_modal" tabindex="-1" role="dialog" aria-labelledby="add_question_modal"
+  <div class="modal fade" id="question_modal" tabindex="-1" role="dialog" aria-labelledby="question_modal"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -148,12 +114,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
-        <button type="button" class="btn btn-primary" id="add" onclick="add_question('{{subject.id}}')">Добавить</button>
+        <button type="button" class="btn btn-primary" onclick="add_question_1('{{subject.id}}')">Добавить</button>
       </div>
     </div>
   </div>
   </div>
   {% endif %}
+
   
 
   <script src="{% static 'App/js/jquery.js' %}" type="text/javascript"></script>

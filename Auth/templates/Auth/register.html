@@ -36,42 +36,37 @@
                   <form class="text-center" action="/accounts/register/" method="post" style="color: #757575;">
                     {% csrf_token %}
 
-                    <div class="form-row mb-0">
-                      <div class="col">
-                          <!-- First name -->
-                          <div class="md-form">
-                              <input type="text" id="id_name" name="name" class="form-control {% if errors.name %}is-invalid{% endif %}" required>
-                              <label for="name">Имя</label>
-                              {% if errors.name %}
-                                <div class="invalid-feedback">
-                                  {{errors.name}}
-                                </div>
-                              {% endif %}
-                          </div>
-                      </div>
+                    <div class="form-row mb-0">  
                       <div class="col">
                           <!-- Last name -->
                           <div class="md-form">
-                              <input type="text" id="id_surname" name="surname" class="form-control {% if errors.surname %}is-invalid{% endif %}" required>
-                              <label for="surname">Фамилия</label>
-                              {% if errors.surname %}
+                              <input type="text" id="id_fio" name="fio" class="form-control {% if errors.surname %}is-invalid{% endif %}" required>
+                              <label for="id_fio">ФИО</label>
+                              {% if errors.fio %}
                                 <div class="invalid-feedback">
-                                  {{errors.surname}}
+                                  {{errors.fio}}
                                 </div>
                               {% endif %}
                           </div>
                       </div>
                     </div>
 
-                    <!-- Email -->
+                    <!-- username -->
                     <div class="md-form mt-0">
-                      <input type="email" id="id_email" name="email" class="form-control {% if errors.email %}is-invalid{% endif %}" required>
-                      <label for="email">E-mail</label>
-                      {% if errors.email %}
+                      <input type="text" id="id_username" name="username" class="form-control {% if errors.email %}is-invalid{% endif %}" required>
+                      <label for="id_username">Имя пользователя</label>
+                      {% if errors.username %}
                         <div class="invalid-feedback">
-                          {{errors.email}}
+                          {{errors.username}}
                         </div>
                       {% endif %}
+                    </div>
+
+                    <div class="md-form mt-0">
+                      <select class="browser-default custom-select" name="group">
+                        <option selected>Выберете группу</option>
+                        <option value="БВТ-191">БВТ-191</option>
+                      </select>
                     </div>
 
                     <!-- Password -->
@@ -96,9 +91,6 @@
                     <!-- Register -->
                     <p>Есть аккаунт?
                       <a href="/accounts/login">Войти</a>
-                    </p>
-                    <p>Забыли пароль?
-                      <a href="">Восстановить</a>
                     </p>
 
                   </form>
